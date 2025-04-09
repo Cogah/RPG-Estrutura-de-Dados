@@ -1,3 +1,4 @@
+import java.util.Scanner;
 public class Personagem {
     private int vidaAtual;
     private int vidaMaxima;
@@ -128,5 +129,36 @@ public class Personagem {
             System.out.println(this.nome + " está incapacitado e não pode atacar!");
         }
     }
-    
+    public Ataque escolherAtaque() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Escolha um ataque: ");
+        System.out.println("1. Ataque físico leve\n" + "\n2. Ataque físico pesado\n" + "3. Ataque mágico leve\\n" +
+                            "4. Ataque mágico pesado\\n");       
+        String opcao = sc.nextLine();
+        Ataque ataqueEscolhido = null;
+        switch (opcao) {
+            case "1":
+                ataqueEscolhido = new Ataque("Ataque físico leve", 10, 0, 5);
+                break;
+            case "2":
+                ataqueEscolhido = new Ataque("Ataque físico pesado", 20, 0, 15);
+                break;
+            case "3":
+                ataqueEscolhido = new Ataque("Ataque mágico leve", 15, 5, 0);
+                break;
+            case "4":
+                ataqueEscolhido = new Ataque("Ataque mágico pesado", 25, 15, 0);
+                break;
+            default:
+                System.out.println("Opção inválida. Tente novamente.");
+        }
+        if (ataqueEscolhido != null) {
+            System.out.println("Ataque escolhido: " + ataqueEscolhido.getNome());
+        } else {
+            System.out.println("Nenhum ataque escolhido.");
+        }
+        sc.close();
+        
+        return ataqueEscolhido;
+    }
 }

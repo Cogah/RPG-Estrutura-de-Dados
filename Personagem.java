@@ -141,13 +141,13 @@ public class Personagem {
                 ataqueEscolhido = new Ataque("Ataque físico leve", 10, 0, 5);
                 break;
             case "2":
-                ataqueEscolhido = new Ataque("Ataque físico pesado", 20, 0, 15);
+                ataqueEscolhido = new Ataque("Ataque físico pesado", 30, 0, 15);
                 break;
             case "3":
                 ataqueEscolhido = new Ataque("Ataque mágico leve", 15, 5, 0);
                 break;
             case "4":
-                ataqueEscolhido = new Ataque("Ataque mágico pesado", 25, 15, 0);
+                ataqueEscolhido = new Ataque("Ataque mágico pesado", 40, 15, 0);
                 break;
             default:
                 System.out.println("Opção inválida. Tente novamente.");

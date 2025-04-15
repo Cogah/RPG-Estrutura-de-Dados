@@ -1,3 +1,3 @@
-carlos:10
+carlos:30
 andrey:9
 gabriel:20

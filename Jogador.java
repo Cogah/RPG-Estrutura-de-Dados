@@ -1,7 +1,7 @@
 public class Jogador {
     private int idJogador;
     private String nome;
-    private String senha;   
+    private String senha;
     private int saldoMoedas;
     private FilaPersonagens personagens;
 
@@ -36,6 +36,11 @@ public class Jogador {
     public void adicionarPersonagem(String personagem) {
         personagens.enfileirar(personagem);
         System.out.println("Personagem " + personagem + " adicionado ao jogador " + nome);
+    }
+
+    public void adicionarPersonagem(Personagem personagem) {
+        personagens.enfileirar(personagem);
+        System.out.println("Personagem " + personagem.getNome() + " adicionado ao jogador " + nome);
     }
 
     public String removerPersonagem() {

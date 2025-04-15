@@ -1,6 +1,12 @@
 public class Arena {
     public int turnoNumero = 0;
     public boolean batalhaAtiva = false;
+    public FilaPersonagens ordemBatalha = new FilaPersonagens();
+    public PilhaPersonagens ranking = new PilhaPersonagens();
+    public Arena() {
+        this.turnoNumero = 0;
+        this.batalhaAtiva = false;
+    }
 
     public void iniciarBatalha(Personagem jogador1, Personagem jogador2) {
         if (jogador1 == null) {

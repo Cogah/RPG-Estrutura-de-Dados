@@ -6,14 +6,18 @@ public class Personagem {
     private int manaMaxima;
     private int staminaAtual;
     private int staminaMaxima;
-    private int ataque;
+    private int ataqueFisico;
+    private int ataqueMagico;
     private int defesa;
     private String nome;
     private int nivel;
+    private Ataque[] ataques = new Ataque[4];
+    private boolean giveUp = false;
     
-    public Personagem(int vidaMaxima, int ataque, int defesa, String nome, int nivel, int manaMaxima, int staminaMaxima) {
+    public Personagem(int vidaMaxima, int ataqueFisico,int ataqueMagico, int defesa, String nome, int nivel, int manaMaxima, int staminaMaxima) {
         this.vidaMaxima = vidaMaxima;
-        this.ataque = ataque;
+        this.ataqueFisico = ataqueFisico;
+        this.ataqueMagico = ataqueMagico;
         this.defesa = defesa;
         this.nome = nome;
         this.nivel = nivel;
@@ -37,12 +41,20 @@ public class Personagem {
         this.vidaMaxima = vidaMaxima;
     }
 
-    public int getAtaque() {
-        return ataque;
+    public int getAtaqueFisico() {
+        return ataqueFisico;
     }
 
-    public void setAtaque(int ataque) {
-        this.ataque = ataque;
+    public void setAtaqueFisico(int ataqueFisico) {
+        this.ataqueFisico = ataqueFisico;
+    }
+
+    public int getAtaqueMagico() {
+        return ataqueMagico;
+    }
+
+    public void setAtaqueMagico(int ataqueMagico) {
+        this.ataqueMagico = ataqueMagico;
     }
 
     public int getDefesa() {
@@ -77,7 +89,6 @@ public class Personagem {
         }
     }
     
-    
     public int getManaAtual() {
         return manaAtual;
     }
@@ -110,11 +121,30 @@ public class Personagem {
         this.staminaMaxima = staminaMaxima;
     }
 
+    
+
+    public boolean isGiveUp() {
+        return giveUp;
+    }
+
+    public void setGiveUp(boolean giveUp) {
+        this.giveUp = giveUp;
+    }
+
     public int calcularDano(Personagem alvo, Ataque movimento) {
-        return (int) ((((2 * nivel) / 5.0 + 2) * ataque * movimento.getDano()) / alvo.getDefesa() + 50 + 2);
+        int dano = 0;
+        if(movimento.getCustoMana() > 0) {
+            dano = (int) ((((2 * nivel) / 5.0 + 2) * ataqueMagico * movimento.getDano()) / alvo.getDefesa() + 50 + 2);
+        }else if(movimento.getCustoStamina() > 0) {
+            dano = (int) ((((2 * nivel) / 5.0 + 2) * ataqueFisico * movimento.getDano()) / alvo.getDefesa() + 50 + 2);
+        }
+        return dano;
     }
 
     public void ataque(Personagem alvo, Ataque movimento) {
+        ataques[0] = new Ataque("Ataque Físico", 20, 0, 5);
+        ataques[1] = new Ataque("Ataque Mágico", 30, 12, 0);
+
         if (this.isAlive()) {
             int dano = calcularDano(alvo, movimento);
             alvo.setVidaAtual(alvo.getVidaAtual() - dano);
@@ -132,22 +162,18 @@ public class Personagem {
     public Ataque escolherAtaque() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Escolha um ataque: ");
-        System.out.println("1. Ataque físico leve\n" + "\n2. Ataque físico pesado\n" + "3. Ataque mágico leve\\n" +
-                            "4. Ataque mágico pesado\\n");       
+        System.out.println("1. Ataque físico" + "\n2. Ataque mágico\n" + "3. Fugir\\n");       
         String opcao = sc.nextLine();
         Ataque ataqueEscolhido = null;
         switch (opcao) {
             case "1":
-                ataqueEscolhido = new Ataque("Ataque físico leve", 10, 0, 5);
+                ataqueEscolhido = ataques[0];
                 break;
             case "2":
-                ataqueEscolhido = new Ataque("Ataque físico pesado", 30, 0, 15);
+                ataqueEscolhido = ataques[1];
                 break;
             case "3":
-                ataqueEscolhido = new Ataque("Ataque mágico leve", 15, 5, 0);
-                break;
-            case "4":
-                ataqueEscolhido = new Ataque("Ataque mágico pesado", 40, 15, 0);
+                this.setGiveUp(true);
                 break;
             default:
                 System.out.println("Opção inválida. Tente novamente.");

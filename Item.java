@@ -23,6 +23,54 @@ public class Item {
         return custo;
     }
 
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public void setCusto(int custo) {
+        this.custo = custo;
+    }
+
+    public boolean isConsumido() {
+        return consumido;
+    }
+
+    public void setConsumido(boolean consumido) {
+        this.consumido = consumido;
+    }
+
+    public int getRecoverMana() {
+        return recoverMana;
+    }
+
+    public void setRecoverMana(int recoverMana) {
+        this.recoverMana = recoverMana;
+    }
+
+    public int getRecoverStamina() {
+        return recoverStamina;
+    }
+
+    public void setRecoverStamina(int recoverStamina) {
+        this.recoverStamina = recoverStamina;
+    }
+
+    public int getRecoverVida() {
+        return recoverVida;
+    }
+
+    public void setRecoverVida(int recoverVida) {
+        this.recoverVida = recoverVida;
+    }
+
     public void usar(Personagem personagem) {
         if (!consumido) {
             personagem.setVidaAtual(personagem.getVidaAtual() + recoverVida);

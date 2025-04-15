@@ -1,3 +1,1 @@
-carlos:10
-andrey:9
-gabriel:20
+andrey:meDaEstagio:80

@@ -1,9 +1,15 @@
 class Node {
-    String personagem;
+    Personagem personagem;
+    Item item;
     Node next;
 
-    public Node(String personagem) {
+    public Node(Personagem personagem) {
         this.personagem = personagem;
+        this.next = null;
+    }
+
+    public Node(Item item) {
+        this.item = item;
         this.next = null;
     }
 }

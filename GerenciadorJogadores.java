@@ -33,4 +33,9 @@ public class GerenciadorJogadores {
         }
         return null;
     }
+
+    public void removerJogador(Jogador jogador) {
+        jogadores.remove(jogador);
+        System.out.println("✅ Jogador removido com sucesso!");
+    }
 }

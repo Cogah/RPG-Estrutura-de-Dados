@@ -5,7 +5,7 @@ class FilaPersonagens {
         this.frente = this.tras = null;
     }
 
-    public void enfileirar(String personagem) {
+    public void enfileirar(Personagem personagem) {
         Node novoNode = new Node(personagem);
         if (tras == null) {
             frente = tras = novoNode;
@@ -15,11 +15,11 @@ class FilaPersonagens {
         }
     }
 
-    public String desenfileirar() {
+    public Personagem desenfileirar() {
         if (frente == null) {
             return null;
         }
-        String personagemRemovido = frente.personagem;
+        Personagem personagemRemovido = frente.personagem;
         frente = frente.next;
         if (frente == null) {
             tras = null;

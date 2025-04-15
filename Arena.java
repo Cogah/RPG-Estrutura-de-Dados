@@ -49,10 +49,10 @@ public class Arena {
         jogador2.ataque(jogador1, ataqueEscolhido2);
 
         System.out.println("Fim do turno!\n Resultados:");
-        if(jogador1.isAlive() == false){
+        if(jogador1.isAlive() == false || jogador1.isGiveUp() == true){
             System.out.println("Jogador 1 perdeu!");
             this.finalizarBatalha(jogador2, jogador1);
-        }else if(jogador2.isAlive() == false){
+        }else if(jogador2.isAlive() == false || jogador2.isGiveUp() == true){
             System.out.println("Jogador 2 perdeu!");
             this.finalizarBatalha(jogador1, jogador2);
         }else{

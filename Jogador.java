@@ -54,7 +54,7 @@ public class Jogador {
     }
 
     public void exibirPersonagens() {
-        System.out.print("Personagens de " + nome + ": ");
+        System.out.println("Personagens de " + nome + ": ");
         personagens.exibirFila();
     }
 }

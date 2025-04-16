@@ -5,7 +5,6 @@ class FilaPersonagens {
         this.frente = this.tras = null;
     }
 
-    // Método para enfileirar usando String (compatível com Jogador.java)
     public void enfileirar(String personagem) {
         Node novoNode = new Node(personagem);
         if (tras == null) {
@@ -16,7 +15,6 @@ class FilaPersonagens {
         }
     }
 
-    // Método para enfileirar usando Personagem (compatível com Arena.java)
     public void enfileirar(Personagem personagem) {
         Node novoNode = new Node(personagem);
         if (tras == null) {
@@ -72,9 +70,9 @@ class FilaPersonagens {
         Node atual = frente;
         while (atual != null) {
             if (atual.personagem != null) {
-                System.out.print(atual.personagem.getNome() + " -> ");
+                System.out.println(atual.personagem.getNome() + " -> ");
             } else {
-                System.out.print(atual.nomePersonagem + " -> ");
+                System.out.println(atual.nomePersonagem + " -> ");
             }
             atual = atual.next;
         }

@@ -1,8 +1,7 @@
 import java.util.ArrayList;
-import java.util.List;
 
 public class GerenciadorJogadores {
-    private List<Jogador> jogadores = new ArrayList<>();
+    private ArrayList<Jogador> jogadores = new ArrayList<>();
 
     public Jogador cadastrar(String nome, String senha) {
         if (buscarJogadorPorNome(nome) != null) {

@@ -130,51 +130,42 @@ public class Personagem {
 
     public int calcularDano(Personagem alvo, Ataque movimento) {
         Random rand = new Random();
-        boolean critico = rand.nextInt(100) < 10; // 10% de chance de crítico
-        boolean esquiva = rand.nextInt(100) < 5; // 5% de chance de esquiva
+        boolean critico = rand.nextInt(100) < 10;
+        boolean esquiva = rand.nextInt(100) < 5; 
 
         if (esquiva) {
             System.out.println(alvo.getNome() + " esquivou do ataque!");
             return 0;
         }
 
-        // Base de dano de acordo com o tipo de ataque
         int danoBase;
         if (movimento.getCustoMana() > 0) {
-            // Ataque mágico
             danoBase = (int) (this.ataqueMagico * 0.8 * movimento.getDano() / 100.0);
         } else {
-            // Ataque físico
             danoBase = (int) (this.ataqueFisico * 0.8 * movimento.getDano() / 100.0);
         }
 
-        // Calcular redução pela defesa (a defesa reduz o dano por porcentagem)
         double reducaoDano = alvo.getDefesa() / 100.0;
         if (reducaoDano > 0.8)
-            reducaoDano = 0.8; // Máximo de 80% de redução
+            reducaoDano = 0.8; 
 
-        // Aplicar defesa e adicionar aleatoriedade (80-120% do dano base)
         int danoFinal = (int) (danoBase * (1.0 - reducaoDano) * (0.8 + rand.nextDouble() * 0.4));
 
-        // Aplicar níveis (cada nível adiciona 5% de dano)
         danoFinal = (int) (danoFinal * (1 + (this.nivel - 1) * 0.05));
 
-        // Aplicar crítico se ocorrer
         if (critico) {
             danoFinal *= 1.5;
             System.out.println("CRÍTICO! O ataque causou dano extra!");
         }
 
-        // Garantir que o dano seja pelo menos 1 (exceto em caso de esquiva)
         return Math.max(1, danoFinal);
     }
 
     public void ataque(Personagem alvo, Ataque movimento) {
-        ataques[0] = new Ataque("Ataque Físico", 65, 0, 5); // Reduzindo o dano base
-        ataques[1] = new Ataque("Ataque Mágico", 85, 12, 0); // Reduzindo o dano base
+        ataques[0] = new Ataque("Ataque Físico", 65, 0, 5);
+        ataques[1] = new Ataque("Ataque Mágico", 85, 12, 0); 
 
         if (this.isAlive()) {
-            // Verificar se tem mana/stamina suficiente
             if (this.manaAtual < movimento.getCustoMana()) {
                 System.out.println(this.nome + " não tem mana suficiente para usar " + movimento.getNome() + "!");
                 return;
@@ -184,24 +175,19 @@ public class Personagem {
                 return;
             }
 
-            // Calcular dano
             int dano = calcularDano(alvo, movimento);
 
-            // Aplicar dano
             if (dano > 0) {
                 int vidaAnterior = alvo.getVidaAtual();
                 alvo.setVidaAtual(Math.max(0, alvo.getVidaAtual() - dano));
 
-                // Consumir recursos
                 manaAtual -= movimento.getCustoMana();
                 staminaAtual -= movimento.getCustoStamina();
 
-                // Mensagens de feedback
                 System.out.println(this.nome + " usou " + movimento.getNome() + " causando " + dano + " de dano!");
                 System.out.println(alvo.getNome() + " perdeu " + (vidaAnterior - alvo.getVidaAtual()) +
                         " pontos de vida e agora tem " + alvo.getVidaAtual() + "/" + alvo.getVidaMaxima() + " HP");
 
-                // Verificar se o alvo foi derrotado
                 if (alvo.getVidaAtual() <= 0) {
                     System.out.println(alvo.getNome() + " foi derrotado!");
                 }

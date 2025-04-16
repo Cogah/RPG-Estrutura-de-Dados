@@ -77,7 +77,6 @@ public class Item {
             personagem.setManaAtual(personagem.getManaAtual() + recoverMana);
             personagem.setStaminaAtual(personagem.getStaminaAtual() + recoverStamina);
 
-            // Não permitir que atributos excedam o máximo
             if (personagem.getVidaAtual() > personagem.getVidaMaxima()) {
                 personagem.setVidaAtual(personagem.getVidaMaxima());
             }

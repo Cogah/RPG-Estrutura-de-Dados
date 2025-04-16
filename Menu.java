@@ -5,7 +5,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -16,11 +15,10 @@ public class Menu {
     private static Scanner scanner = new Scanner(System.in);
     String usuarioLogado = null;
 
-
     public String fazerLogin() throws IOException {
-        System.out.print("Nome de usuário: ");
+        System.out.println("Nome de usuário: ");
         String nome = scanner.nextLine();
-        System.out.print("Senha: ");
+        System.out.println("Senha: ");
         String senha = scanner.nextLine();
 
         File arquivo = new File(ARQUIVO_USUARIOS);
@@ -46,8 +44,7 @@ public class Menu {
         return null;
     }
 
-    public void menuInicio() throws IOException{
-
+    public void menuInicio() throws IOException {
 
         System.out.println("=======================================");
         System.out.println("        RPG BATALHA DE HERÓIS         ");
@@ -55,10 +52,10 @@ public class Menu {
 
         while (usuarioLogado == null) {
             System.out.println("\nEscolha uma opção:");
-            System.out.println("1) Login");
-            System.out.println("2) Cadastrar");
-            System.out.println("3) Sair");
-            System.out.print("Opção: ");
+            System.out.println("1) => Login");
+            System.out.println("2) => Cadastrar");
+            System.out.println("3) => Sair");
+            System.out.println("Opção: ");
 
             String opcao = scanner.nextLine();
 
@@ -70,7 +67,7 @@ public class Menu {
                     usuarioLogado = fazerCadastro();
                     break;
                 case "3":
-                    System.out.println("Saindo do jogo. Até a próxima!");
+                System.out.println("Saindo do jogo. Até a próxima, meu chefe! :)");
                     return;
                 default:
                     System.out.println("Opção inválida!");
@@ -83,18 +80,16 @@ public class Menu {
         scanner.close();
     }
 
-        
-
     public static void menuPrincipal(String usuario) throws IOException {
         boolean continuar = true;
         while (continuar) {
             System.out.println("\n===== MENU PRINCIPAL =====");
-            System.out.println("1 - Gerenciar Personagens");
-            System.out.println("2 - Iniciar Batalha");
-            System.out.println("3 - Visualizar Perfil");
-            System.out.println("4 - Loja de Itens");
-            System.out.println("5 - Sair");
-            System.out.print("Opção: ");
+            System.out.println("1) => Gerenciar Personagens");
+            System.out.println("2) => Iniciar Batalha");
+            System.out.println("3) => Visualizar Perfil");
+            System.out.println("4) => Loja de Itens");
+            System.out.println("5) => Sair");
+            System.out.println("Opção: ");
 
             String opcao = scanner.nextLine();
 
@@ -113,7 +108,7 @@ public class Menu {
                     break;
                 case "5":
                     continuar = false;
-                    System.out.println("Saindo do jogo. Até a próxima!");
+                    System.out.println("Saindo do jogo. Até a próxima, meu chefe! :)");
                     break;
                 default:
                     System.out.println("Opção inválida!");
@@ -128,7 +123,7 @@ public class Menu {
             System.out.println("1 - Criar novo personagem");
             System.out.println("2 - Listar meus personagens");
             System.out.println("3 - Voltar");
-            System.out.print("Opção: ");
+            System.out.println("Opção: ");
 
             String opcao = scanner.nextLine();
 
@@ -149,8 +144,7 @@ public class Menu {
     }
 
     public static void menuBatalha(String usuario) throws IOException {
-        // Verificar se o usuário tem personagens
-        List<String> personagensUsuario = obterPersonagensUsuario(usuario);
+        ArrayList<String> personagensUsuario = obterPersonagensUsuario(usuario);
         if (personagensUsuario.isEmpty()) {
             System.out.println("Você precisa criar pelo menos um personagem para batalhar!");
             return;
@@ -160,7 +154,7 @@ public class Menu {
         System.out.println("1 - PvE (Contra Monstros)");
         System.out.println("2 - PvP (Contra Outros Jogadores)");
         System.out.println("3 - Voltar");
-        System.out.print("Opção: ");
+        System.out.println("Opção: ");
 
         String opcao = scanner.nextLine();
 
@@ -178,23 +172,20 @@ public class Menu {
         }
     }
 
-    public static void batalhaPvE(String usuario, List<String> personagensUsuario) throws IOException {
-        // Selecionar personagem do jogador
+    public static void batalhaPvE(String usuario, ArrayList<String> personagensUsuario) throws IOException {
         Personagem jogador = selecionarPersonagemJogador(usuario, personagensUsuario);
         if (jogador == null)
             return;
 
-        // Criar um monstro para a batalha
         Personagem monstro = criarMonstroAleatorio();
         System.out.println("\nVocê encontrou um " + monstro.getNome() + " nível " + monstro.getNivel() + "!");
         System.out.println("Atributos do monstro: Vida=" + monstro.getVidaMaxima() + ", Ataque Físico="
                 + monstro.getAtaqueFisico() + ", Ataque Mágico=" + monstro.getAtaqueMagico());
 
-        System.out.print("\nDeseja iniciar a batalha? (S/N): ");
+        System.out.println("\nDeseja iniciar a batalha? (S/N): ");
         String confirmacao = scanner.nextLine();
         if (confirmacao.equalsIgnoreCase("S")) {
             iniciarBatalha(jogador, monstro, usuario);
-            // Após a batalha, se o jogador vencer, ele ganha moedas
             if (jogador.isAlive() && !monstro.isAlive()) {
                 int moedasGanhas = 10 + monstro.getNivel() * 5;
                 atualizarMoedas(usuario, moedasGanhas);
@@ -203,25 +194,22 @@ public class Menu {
         }
     }
 
-    public static void batalhaPvP(String usuario, List<String> personagensUsuario) throws IOException {
-        // Lista de outros jogadores
-        List<String> outrosJogadores = obterOutrosJogadores(usuario);
+    public static void batalhaPvP(String usuario, ArrayList<String> personagensUsuario) throws IOException {
+        ArrayList<String> outrosJogadores = obterOutrosJogadores(usuario);
         if (outrosJogadores.isEmpty()) {
             System.out.println("Não há outros jogadores disponíveis para batalha!");
             return;
         }
 
-        // Selecionar personagem do jogador
         Personagem jogador = selecionarPersonagemJogador(usuario, personagensUsuario);
         if (jogador == null)
             return;
 
-        // Selecionar oponente
         System.out.println("\nSelecione o oponente:");
         for (int i = 0; i < outrosJogadores.size(); i++) {
             System.out.println((i + 1) + " - " + outrosJogadores.get(i));
         }
-        System.out.print("Opção (0 para voltar): ");
+        System.out.println("Opção (0 para voltar): ");
 
         int opcaoOponente;
         try {
@@ -238,19 +226,18 @@ public class Menu {
         }
 
         String oponente = outrosJogadores.get(opcaoOponente - 1);
-        List<String> personagensOponente = obterPersonagensUsuario(oponente);
+        ArrayList<String> personagensOponente = obterPersonagensUsuario(oponente);
 
         if (personagensOponente.isEmpty()) {
             System.out.println("O oponente não tem personagens disponíveis!");
             return;
         }
 
-        // Escolhendo personagem do oponente
         System.out.println("\nPersonagens de " + oponente + ":");
         for (int i = 0; i < personagensOponente.size(); i++) {
             System.out.println((i + 1) + " - " + personagensOponente.get(i));
         }
-        System.out.print("Escolha um personagem para enfrentar (0 para voltar): ");
+        System.out.println("Escolha um personagem para enfrentar (0 para voltar): ");
 
         int escolhaPersonagemOponente;
         try {
@@ -272,7 +259,6 @@ public class Menu {
         System.out.println("Você irá enfrentar o personagem " + nomePersonagemOponente + " do jogador " + oponente);
         iniciarBatalha(jogador, personagemOponente, usuario);
 
-        // Após a batalha PvP, se o jogador vencer, ele ganha moedas
         if (jogador.isAlive() && !personagemOponente.isAlive()) {
             int moedasGanhas = 20;
             atualizarMoedas(usuario, moedasGanhas);
@@ -280,12 +266,12 @@ public class Menu {
         }
     }
 
-    public static Personagem selecionarPersonagemJogador(String usuario, List<String> personagensUsuario) {
+    public static Personagem selecionarPersonagemJogador(String usuario, ArrayList<String> personagensUsuario) {
         System.out.println("\nSelecione seu personagem:");
         for (int i = 0; i < personagensUsuario.size(); i++) {
             System.out.println((i + 1) + " - " + personagensUsuario.get(i));
         }
-        System.out.print("Opção (0 para voltar): ");
+        System.out.println("Opção (0 para voltar): ");
 
         int opcaoPersonagem;
         try {
@@ -315,31 +301,28 @@ public class Menu {
         while (arena.batalhaAtiva) {
             arena.executarTurno(jogador, oponente, usuario);
 
-            System.out.print("\nPressione ENTER para continuar...");
+            System.out.println("\nPressione ENTER para continuar...");
             scanner.nextLine();
         }
 
         System.out.println("\n===== FIM DA BATALHA =====");
         arena.ranking.exibirPilha();
 
-        System.out.print("\nPressione ENTER para voltar ao menu...");
+        System.out.println("\nPressione ENTER para voltar ao menu...");
         scanner.nextLine();
     }
 
     public static Personagem criarPersonagemAPartirDoNome(String nome) {
-        // Criando valores baseados no nome para gerar um personagem único mas
-        // consistente
         int hashCode = Math.abs(nome.hashCode());
-        Random rand = new Random(hashCode); // Usando o hashCode como seed para consistência
+        Random rand = new Random(hashCode); // Isso daqui é muito genial !!!!!
 
-        // Valores mais equilibrados
-        int nivel = 1 + rand.nextInt(3); // 1-3
-        int vida = 70 + nivel * 10 + rand.nextInt(21); // 80-120 dependendo do nível
-        int ataqueFisico = 15 + nivel * 5 + rand.nextInt(11); // 20-45 dependendo do nível
-        int ataqueMagico = 15 + nivel * 5 + rand.nextInt(11); // 20-45 dependendo do nível
-        int defesa = 10 + nivel * 2 + rand.nextInt(6); // 12-30 dependendo do nível
-        int mana = 40 + nivel * 10 + rand.nextInt(31); // 50-100 dependendo do nível
-        int stamina = 40 + nivel * 8 + rand.nextInt(21); // 48-90 dependendo do nível
+        int nivel = 1 + rand.nextInt(3);
+        int vida = 70 + nivel * 10 + rand.nextInt(21); 
+        int ataqueFisico = 15 + nivel * 5 + rand.nextInt(11); 
+        int ataqueMagico = 15 + nivel * 5 + rand.nextInt(11); 
+        int defesa = 10 + nivel * 2 + rand.nextInt(6); 
+        int mana = 40 + nivel * 10 + rand.nextInt(31); 
+        int stamina = 40 + nivel * 8 + rand.nextInt(21);
 
         Personagem p = new Personagem(vida, ataqueFisico, ataqueMagico, defesa, nome, nivel, mana, stamina);
         p.setVidaAtual(vida);
@@ -351,19 +334,18 @@ public class Menu {
 
     public static Personagem criarMonstroAleatorio() {
         String[] nomesMonstros = { "Goblin", "Ogro", "Dragão", "Esqueleto", "Zumbi", "Bruxa", "Troll", "Slime",
-                "Aranha Gigante", "Fantasma" };
+                "Aranha Gigante", "Fantasma, Casseb, Projeto Integrado, Amazon Hacking" };
         Random rand = new Random();
 
         String nome = nomesMonstros[rand.nextInt(nomesMonstros.length)];
-        int nivel = 1 + rand.nextInt(3); // 1-3 (mesmo alcance que os jogadores)
+        int nivel = 1 + rand.nextInt(3); 
 
-        // Atributos equilibrados
-        int vida = 50 + nivel * 15 + rand.nextInt(31); // 65-125 dependendo do nível
-        int ataqueFisico = 12 + nivel * 4 + rand.nextInt(9); // 16-33 dependendo do nível
-        int ataqueMagico = 12 + nivel * 4 + rand.nextInt(9); // 16-33 dependendo do nível
-        int defesa = 8 + nivel * 3 + rand.nextInt(7); // 11-28 dependendo do nível
-        int mana = 30 + nivel * 10 + rand.nextInt(31); // 40-90 dependendo do nível
-        int stamina = 30 + nivel * 8 + rand.nextInt(21); // 38-80 dependendo do nível
+        int vida = 50 + nivel * 15 + rand.nextInt(31); 
+        int ataqueFisico = 12 + nivel * 4 + rand.nextInt(9); 
+        int ataqueMagico = 12 + nivel * 4 + rand.nextInt(9); 
+        int defesa = 8 + nivel * 3 + rand.nextInt(7); 
+        int mana = 30 + nivel * 10 + rand.nextInt(31); 
+        int stamina = 30 + nivel * 8 + rand.nextInt(21); 
 
         Personagem monstro = new Personagem(vida, ataqueFisico, ataqueMagico, defesa, nome, nivel, mana, stamina);
         monstro.setVidaAtual(vida);
@@ -375,16 +357,14 @@ public class Menu {
 
     public static void criarPersonagem(String usuario) throws IOException {
         System.out.println("\n===== CRIAR NOVO PERSONAGEM =====");
-        System.out.print("Nome do personagem: ");
+        System.out.println("Nome do personagem: ");
         String nomePersonagem = scanner.nextLine();
 
-        // Verificar se já existe um personagem com esse nome para o usuário
         if (personagemJaExiste(usuario, nomePersonagem)) {
             System.out.println("Você já tem um personagem com esse nome!");
             return;
         }
 
-        // Salvar o personagem
         FileWriter fw = new FileWriter(ARQUIVO_PERSONAGENS, true);
         fw.write(usuario + ":" + nomePersonagem + "\n");
         fw.close();
@@ -392,7 +372,7 @@ public class Menu {
     }
 
     public static boolean personagemJaExiste(String usuario, String nomePersonagem) throws IOException {
-        List<String> personagens = obterPersonagensUsuario(usuario);
+        ArrayList<String> personagens = obterPersonagensUsuario(usuario);
         for (String p : personagens) {
             if (p.equalsIgnoreCase(nomePersonagem)) {
                 return true;
@@ -401,8 +381,8 @@ public class Menu {
         return false;
     }
 
-    public static List<String> obterPersonagensUsuario(String usuario) throws IOException {
-        List<String> personagens = new ArrayList<>();
+    public static ArrayList<String> obterPersonagensUsuario(String usuario) throws IOException {
+        ArrayList<String> personagens = new ArrayList<>();
         File arquivo = new File(ARQUIVO_PERSONAGENS);
 
         if (!arquivo.exists()) {
@@ -423,8 +403,8 @@ public class Menu {
         return personagens;
     }
 
-    public static List<String> obterOutrosJogadores(String usuarioAtual) throws IOException {
-        List<String> jogadores = new ArrayList<>();
+    public static ArrayList<String> obterOutrosJogadores(String usuarioAtual) throws IOException {
+        ArrayList<String> jogadores = new ArrayList<>();
         File arquivo = new File(ARQUIVO_USUARIOS);
 
         if (!arquivo.exists()) {
@@ -449,15 +429,13 @@ public class Menu {
         System.out.println("\n===== PERFIL DO JOGADOR =====");
         System.out.println("Nome: " + usuario);
 
-        // Mostrar quantidade de moedas
         int moedas = obterMoedas(usuario);
         System.out.println("Moedas: " + moedas);
 
-        // Mostrar quantidade de personagens
-        List<String> personagens = obterPersonagensUsuario(usuario);
+        ArrayList<String> personagens = obterPersonagensUsuario(usuario);
         System.out.println("Total de personagens: " + personagens.size());
 
-        System.out.print("\nPressione ENTER para voltar...");
+        System.out.println("\nPressione ENTER para voltar...");
         scanner.nextLine();
     }
 
@@ -500,14 +478,14 @@ public class Menu {
         while ((linha = br.readLine()) != null) {
             String[] dados = linha.split(":");
             if (dados.length >= 2 && dados[0].equals(usuario)) {
-                int moedasAtuais = 0;// Se houver erro de parse, consideramos como 0
+                int moedasAtuais = 0;
                 try {
                     moedasAtuais = Integer.parseInt(dados[2]);
                 } catch (NumberFormatException e) {
-                    
+
                 }
-                bw.write(usuario + ":" + dados[1]+ ":"+ (moedasAtuais + moedasGanhas) );
-                
+                bw.write(usuario + ":" + dados[1] + ":" + (moedasAtuais + moedasGanhas));
+
                 bw.newLine();
                 usuarioEncontrado = true;
             } else {
@@ -520,21 +498,18 @@ public class Menu {
         bw.close();
 
         if (usuarioEncontrado) {
-            // Substituir o arquivo original pelo temporário
             if (arquivoOriginal.delete()) {
                 arquivoTemp.renameTo(arquivoOriginal);
             }
         }
     }
 
-
     public static String fazerCadastro() throws IOException {
-        System.out.print("Nome de usuário: ");
+        System.out.println("Nome de usuário: ");
         String nome = scanner.nextLine();
-        System.out.print("Senha: ");
+        System.out.println("Senha: ");
         String senha = scanner.nextLine();
 
-        // Verificar se o usuário já existe
         File arquivo = new File(ARQUIVO_USUARIOS);
         if (arquivo.exists()) {
             BufferedReader br = new BufferedReader(new FileReader(ARQUIVO_USUARIOS));
@@ -552,7 +527,6 @@ public class Menu {
             br.close();
         }
 
-        // Cadastrar o novo usuário com 100 moedas iniciais
         FileWriter fw = new FileWriter(ARQUIVO_USUARIOS, true);
         fw.write(nome + ":" + senha + ":100\n");
         fw.close();
@@ -563,7 +537,7 @@ public class Menu {
     public static void exibirPersonagens(String usuario) throws IOException {
         System.out.println("\n===== PERSONAGENS DE " + usuario.toUpperCase() + " =====");
 
-        List<String> personagens = obterPersonagensUsuario(usuario);
+        ArrayList<String> personagens = obterPersonagensUsuario(usuario);
 
         if (personagens.isEmpty()) {
             System.out.println("Nenhum personagem encontrado!");
@@ -578,7 +552,7 @@ public class Menu {
             }
         }
 
-        System.out.print("\n    Pressione ENTER para voltar...");
+        System.out.println("\n    Pressione ENTER para voltar...");
         scanner.nextLine();
     }
 
@@ -591,7 +565,7 @@ public class Menu {
             System.out.println("2 - Comprar item");
             System.out.println("3 - Ver meu inventário");
             System.out.println("4 - Voltar");
-            System.out.print("Opção: ");
+            System.out.println("Opção: ");
 
             String opcao = scanner.nextLine();
 
@@ -623,7 +597,7 @@ public class Menu {
         System.out.println("5 - Elixir Mágico (Custo: 50, Recupera: Vida=30, Mana=50)");
         System.out.println("6 - Bebida Energética (Custo: 40, Recupera: Stamina=80, Vida=10)");
 
-        System.out.print("\nPressione ENTER para voltar...");
+        System.out.println("\nPressione ENTER para voltar...");
         scanner.nextLine();
     }
 
@@ -632,7 +606,7 @@ public class Menu {
         System.out.println("Suas moedas: " + obterMoedas(usuario));
         exibirItensDisponiveis();
 
-        System.out.print("Escolha o número do item que deseja comprar (0 para cancelar): ");
+        System.out.println("Escolha o número do item que deseja comprar (0 para cancelar): ");
         int escolha;
         try {
             escolha = Integer.parseInt(scanner.nextLine());
@@ -647,7 +621,6 @@ public class Menu {
             return;
         }
 
-        // Criar o item escolhido
         Item itemComprado = null;
         int custoItem = 0;
 
@@ -678,24 +651,21 @@ public class Menu {
                 break;
         }
 
-        // Verificar se o jogador tem moedas suficientes
         int moedasJogador = obterMoedas(usuario);
         if (moedasJogador < custoItem) {
             System.out.println("Você não tem moedas suficientes para comprar esse item!");
             return;
         }
 
-        // Deduzir moedas do jogador
         atualizarMoedas(usuario, -custoItem);
 
-        // Adicionar o item ao inventário do jogador
         adicionarItemInventario(usuario, itemComprado);
 
         System.out.println("Item " + itemComprado.getNome() + " comprado com sucesso!");
     }
 
     public static void adicionarItemInventario(String usuario, Item item) throws IOException {
-        
+
         File arquivo = new File("inventario.txt");
         FileWriter fw = new FileWriter(arquivo, true);
         fw.write(usuario + ":" + item.getNome() + ":" + item.getCusto() + ":" +
@@ -707,7 +677,7 @@ public class Menu {
     public static void exibirInventario(String usuario) throws IOException {
         System.out.println("\n===== SEU INVENTÁRIO =====");
 
-        List<Item> itens = obterItensUsuario(usuario);
+        ArrayList<Item> itens = obterItensUsuario(usuario);
 
         if (itens.isEmpty()) {
             System.out.println("Você não tem itens no inventário!");
@@ -721,12 +691,12 @@ public class Menu {
             }
         }
 
-        System.out.print("\nPressione ENTER para voltar...");
+        System.out.println("\nPressione ENTER para voltar...");
         scanner.nextLine();
     }
 
-    public static List<Item> obterItensUsuario(String usuario) throws IOException {
-        List<Item> itens = new ArrayList<>();
+    public static ArrayList<Item> obterItensUsuario(String usuario) throws IOException {
+        ArrayList<Item> itens = new ArrayList<>();
         File arquivo = new File("inventario.txt");
 
         if (!arquivo.exists()) {
@@ -755,7 +725,7 @@ public class Menu {
     }
 
     public static void usarItemEmBatalha(String usuario, Personagem jogador) throws IOException {
-        List<Item> itens = obterItensUsuario(usuario);
+        ArrayList<Item> itens = obterItensUsuario(usuario);
 
         if (itens.isEmpty()) {
             System.out.println("Você não tem itens para usar!");
@@ -771,7 +741,7 @@ public class Menu {
                     ", Stamina=" + item.getRecoverStamina() + ")");
         }
 
-        System.out.print("Escolha um item para usar (0 para cancelar): ");
+        System.out.println("Escolha um item para usar (0 para cancelar): ");
         int escolha;
         try {
             escolha = Integer.parseInt(scanner.nextLine());
@@ -789,7 +759,6 @@ public class Menu {
         Item itemSelecionado = itens.get(escolha - 1);
         itemSelecionado.usar(jogador);
 
-        // Remover o item usado do inventário
         removerItemInventario(usuario, itemSelecionado);
     }
 
@@ -805,9 +774,7 @@ public class Menu {
 
         while ((linha = br.readLine()) != null) {
             String[] dados = linha.split(":");
-            if (dados.length == 6 && dados[0].equals(usuario) &&
-                    dados[1].equals(itemUsado.getNome()) && !itemRemovido) {
-                // Pular esta linha (remover o item)
+            if (dados.length == 6 && dados[0].equals(usuario) && dados[1].equals(itemUsado.getNome()) && !itemRemovido) {
                 itemRemovido = true;
             } else {
                 bw.write(linha);
@@ -822,7 +789,6 @@ public class Menu {
             arquivoTemp.renameTo(arquivoOriginal);
         }
 
-}
-
+    }
 
 }

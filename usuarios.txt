@@ -1,2 +1,2 @@
 andrey:meDaEstagio:80
-carlos:10:100
+carlos:10:70

@@ -183,6 +183,7 @@ public class Arena {
     }
 
     private void usarItemEmBatalha(String usuario, Personagem jogador) throws IOException {
-        Menu.usarItemEmBatalha(usuario, jogador);
+        LojaLogica lojaLogica = new LojaLogica();
+        lojaLogica.usarItemEmBatalha(usuario, jogador);
     }
 }
